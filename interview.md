@@ -49,7 +49,7 @@ Remote position - find a history of remote proficiency
 
 # GO
 
-1. What do you love about `GO`?
+1. What do you love about `GO`? *my answers as example*
     - Readability
         - Clear, statically typed, language
         - Easy to follow code 
