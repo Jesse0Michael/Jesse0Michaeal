@@ -24,28 +24,55 @@ Remote position - find a history of remote proficiency
 1. I need to programmatically trigger a long running bash script. How would you build something that solves this problem.
     - assume the script is a piece of ancient legacy code that needs to be ran at a non regular intervals
 
-2. What are the pros and cons of tracing when it comes to Application Performance Metrics.
-    - answer should include gathering the rate/duration of tasks
-    - may include discovering errors or particularly slow parts of the application
-    - maybe you trace too much and it's expensive
-        - rate limit your traces.
-    - maybe you over trace everything and have traces with >10k spans and slows things down or causes memory issues
-        - limit what you actually trace
-
-3. Explain the process you would take to migrate a service from one database to another.
+1. Explain the process you would take to migrate a service from one database to another.
     - assume the service does reads/writes to the database
     - does the candidates solution transition smoothly? 
     - does it require downtime and a cut over period?
     - do they mention abstracting the data interface
     - does their solution handle the data migration/back filling of the data.
 
-4. Why does Netflix deliberately take down its own servers? How would you approach doing the same?
+1. Why does Netflix deliberately take down its own servers? How would you approach doing the same?
     - Netflix's [Chaos Monkey](https://netflix.github.io/chaosmonkey/) deliberately takes down instances to ensure they system is resilient and fault tolerant.
     - Whether they build their own service or deploy `Chaos Monkey`, what considerations do they make when deciding what to take down? 
         - specific times
         - frequency of termination
         - staging or production
         - avoid critical services or single points of failure
+
+1. Ask interviewee what's something they're interested in outside of work (sports, food, movies, music, D&D, camping, board games, etc...) and Explain that they are going to design a restful API that manages data around their chosen topic.
+    - What endpoints would you build for this API?
+        - expect the HTTP verb, path, and rough request/response for each endpoint.
+        - HTTP verbs should align close with:
+            - `GET` = retrieval
+            - `POST` = create (or possibly an action)
+            - `PUT` = update
+            - `PATCH` = update (explain what differences there are between PUT)
+            - `DELETE` = delete
+    - What dependencies are there for this service?
+        - expect at least a database layer and them to describe what endpoints depend on that dependency
+        - maybe they add more complex dependencies that require caching or search functionality
+    - Assuming that the service is deployed but slowness and failures are being reported. What are things you would do to combat slow and failed responses
+        - don't make assumptions about how it's deployed. Draw the service diagram if that hasn't already been done
+        - The discussion should any/all of the following topics:
+            - `Application Performance Metrics`
+                - What would you set up to collect metrics for the application?
+                    - tracing, openmetrics, some stats agent, etc...
+                - What are the pros and cons of tracing when it comes to Application Performance Metrics.
+                    - answer should include gathering the rate/duration of tasks
+                    - may include discovering errors or particularly slow parts of the application
+                    - maybe you trace too much and it's expensive
+                        - rate limit your traces.
+                    - maybe you over trace everything and have traces with >10k spans and slows things down or causes memory issues
+                        - limit what you actually trace
+            - `Scaling`
+                - What technologies would you leverage to improve the health of your service at scale?
+                    - load balancing, auto scaling, etc...
+                - What is right sizing?
+                - Why wouldn't you want a massive node that is able to handle your peak traffic
+            - `Optimization`
+                - What would you do if your metrics pointed to frequently slow DB queries?
+                    - cache results
+                    - query optimization
 
 # GO
 
