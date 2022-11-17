@@ -19,7 +19,7 @@ Intern/Junior - learn about long term aspirations
 
 Remote position - find a history of remote proficiency
 
-# Design/Engineering
+# Engineering
 
 1. I need to programmatically trigger a long running bash script. How would you build something that solves this problem.
     - assume the script is a piece of ancient legacy code that needs to be ran at a non regular intervals
@@ -39,40 +39,65 @@ Remote position - find a history of remote proficiency
         - staging or production
         - avoid critical services or single points of failure
 
-1. Ask interviewee what's something they're interested in outside of work (sports, food, movies, music, D&D, camping, board games, etc...) and Explain that they are going to design a restful API that manages data around their chosen topic.
-    - What endpoints would you build for this API?
-        - expect the HTTP verb, path, and rough request/response for each endpoint.
-        - HTTP verbs should align close with:
-            - `GET` = retrieval
-            - `POST` = create (or possibly an action)
-            - `PUT` = update
-            - `PATCH` = update (explain what differences there are between PUT)
-            - `DELETE` = delete
-    - What dependencies are there for this service?
-        - expect at least a database layer and them to describe what endpoints depend on that dependency
-        - maybe they add more complex dependencies that require caching or search functionality
-    - Assuming that the service is deployed but slowness and failures are being reported. What are things you would do to combat slow and failed responses
-        - don't make assumptions about how it's deployed. Draw the service diagram if that hasn't already been done
-        - The discussion should any/all of the following topics:
-            - `Application Performance Metrics`
-                - What would you set up to collect metrics for the application?
-                    - tracing, openmetrics, some stats agent, etc...
-                - What are the pros and cons of tracing when it comes to Application Performance Metrics.
-                    - answer should include gathering the rate/duration of tasks
-                    - may include discovering errors or particularly slow parts of the application
-                    - maybe you trace too much and it's expensive
-                        - rate limit your traces.
-                    - maybe you over trace everything and have traces with >10k spans and slows things down or causes memory issues
-                        - limit what you actually trace
-            - `Scaling`
-                - What technologies would you leverage to improve the health of your service at scale?
-                    - load balancing, auto scaling, etc...
-                - What is right sizing?
-                - Why wouldn't you want a massive node that is able to handle your peak traffic
-            - `Optimization`
-                - What would you do if your metrics pointed to frequently slow DB queries?
-                    - cache results
-                    - query optimization
+# Design
+
+Ask the interviewee what's something they're interested in outside of work (sports, food, movies, music, D&D, camping, board games, etc...) then explain that, together, we are going to walk through designing a product that is built around their chosen topic.
+
+## Interface
+1. What would would you build to interface with the system?
+    - `REST API`
+        - Ask them to describe some of the APIs and endpoints they would need to build
+            - expect the HTTP verb, path, and maybe rough request/response for each endpoint.
+            - HTTP verbs should align close with:
+                - `GET` = retrieval
+                - `POST` = create (or possibly an action)
+                - `PUT` = update
+                - `PATCH` = update (explain what differences there are between PUT)
+                - `DELETE` = delete
+            - How would they maintain and distribute the API specification?
+        - `API Gateway`
+            - Would you use an API Gateway for your services?
+                - What are the benefits of an API Gateway? 
+
+2. How will users access the platform?
+    - `Authentication/Authorization`
+        - What would use for auth? (plaintext passwords in a database, or an authentication service like 0Auth)
+
+## Deployment
+1. What dependencies are there for this service?
+    - expect at least a database layer and them to describe what endpoints depend on that dependency
+    - maybe they add more complex dependencies that require caching or search functionality
+2. How will these dependent services, as well as the applications, be deployed
+    - `Cloud`
+        - What cloud platforms do they have experience with
+    - `Kubernetes`
+        - Ask for the benefits or use cases of Kubernetes
+        - Are there any specific tools that you would use to aid in your deployments, whether infrastructure of application
+            - _helm_, _terraform_
+
+## Performance
+1. Assuming that the platform is deployed but is experiencing slowness and failures are being reported. What are things you would do to combat slow and failed responses?
+    - `Monitoring`
+        - What would you set up for monitoring your system
+            - _logging_, _metrics_, _alerting_
+        - `Application Performance Metrics`
+            - What would you set up to collect metrics for the application?
+                - tracing, openmetrics, some stats agent, etc...
+            - What are the pros and cons of tracing when it comes to Application Performance Metrics.
+                - answer should include gathering the rate/duration of tasks
+                - may include discovering errors or particularly slow parts of the application
+                - maybe you trace too much and it's expensive
+                    - rate limit your traces.
+                - maybe you over trace everything and have traces with >10k spans and slows things down or causes memory issues
+                    - limit what you actually trace
+    - `Scaling`
+        - What tools or technologies would you leverage to improve the health of your service at scale?
+            - _load balancing_, _auto scaling_
+        - What is right sizing a pod?
+        - Why wouldn't you want one large instance that is able to handle your peak traffic
+    - `Optimization`
+        - What would you do if your metrics pointed to frequently slow DB queries?
+            - _caching_, _query optimization_
 
 # GO
 
