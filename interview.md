@@ -39,6 +39,9 @@ Remote position - find a history of remote proficiency
         - staging or production
         - avoid critical services or single points of failure
 
+1. What is your _least_ favorite thing about your _favorite_ programming language?
+    - Use this to try and gauge technical competency for something they should be experts in.
+
 # Design
 
 Ask the interviewee what's something they're interested in outside of work (sports, food, movies, music, D&D, camping, board games, etc...) then explain that, together, we are going to walk through designing a product that is built around their chosen topic.
