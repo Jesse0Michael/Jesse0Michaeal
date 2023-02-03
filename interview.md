@@ -122,6 +122,9 @@ Ask the interviewee what's something they're interested in outside of work (spor
         - Backward compatibility promise from v1
         - Tooling is easy and clear, from the GO cli to managed linters
             - `go build`, `go mod`, `go test`, `go gen`, etc
+    - Usability
+        - Iterfaces through "duck typing" makes undestanding abstractions easy
+        - Embeded structs and interfaces provide everything you need from OOP, no inheritance necessary
     - Concurrency
         - First class support for concurrency using go routines and channels
         - Lightweight threading built in from the ground up
