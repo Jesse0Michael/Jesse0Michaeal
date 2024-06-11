@@ -21,6 +21,14 @@ Remote position - find a history of remote proficiency
 
 # Engineering
 
+1. In your opinion, what is the most import attribute that makes up quality code?
+    - Answers may include, test and code coverage, documentation, performance, observability, or the ever popular "it works"
+    - Do they have any tools or processes that enforce their chosen attribute?
+1. Can you tell me about a project or idea that you championed in your team or organization? This could be a new service or feature, a refactor or migration, or a change in process.
+    - How did you concieve of the idea?
+    - What steps did you take to bring this idea to life?
+    - What challenges did you face along the way?
+    - Looking for initiative and the ability to see a problem and work towards a solution. Something more than someone who just knocks out Jira tickets.
 1. I need to programmatically trigger a long running bash script. How would you build something that solves this problem.
     - assume the script is a piece of ancient legacy code that needs to be ran at a non regular intervals
 
