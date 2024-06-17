@@ -49,6 +49,7 @@ Remote position - find a history of remote proficiency
 
 1. What is your _least_ favorite thing about your _favorite_ programming language?
     - Use this to try and gauge technical competency for something they should be experts in.
+        ex: In GO, iterating over a map is not deterministic. Also, profiling can be difficult to understand and use.
 
 # Design
 
@@ -137,44 +138,54 @@ Ask the interviewee what's something they're interested in outside of work (spor
         - First class support for concurrency using go routines and channels
         - Lightweight threading built in from the ground up
 
-2. Write a function that joins two int slices. [play.golang](https://play.golang.org/p/An-0oUTNXTu)
+2. Write a function that joins string slices from a struct. [play.golang](https://go.dev/play/p/VRS4vJhlFU8)
     ``` 
-    func join(A, B []int) []int {
-        return append(A, B...)
+    func targets(A, B Report) []string {
+	    return append(A.Targets, B.Targets...)
     }
     ```
-    `append` should be expected to be used initially as it should be commonly used for a go developer. Maybe they miss this and iterate over both slices and insert the values into a slice the length of both input values. If they get here, ask them to handle removing duplicate values from the result
+    `append` should be expected to be used initially as it should be commonly used for a go developer. But maybe they see past this this and iterate over both slices and insert the values into a slice the length of both input values. 
+    1. Add a duplicate value into one of the Report structs and ask them to handle removing duplicate values from the result
     ```
-    func dedupe(A []int) []int {
-        index := map[int]struct{}{}
-        var results []int
-        for _, a := range A {
-            if _, ok := index[a]; !ok {
-                results = append(results, a)
-                index[a] = struct{}{}
+    func targets(reports ...Report) []string {
+        index := map[string]struct{}{}
+        var results []string
+        for _, report := range reports {
+            for _, target := range report.Targets {
+                if _, ok := index[target]; !ok {
+                    results = append(results, target)
+                    index[target] = struct{}{}
+                }
             }
         }
-
         return results
     }
     ```
-    whether in a new function or not, they should dedupe the slice(s) 
+    whether in a new function or not, they should dedupe the targets
 
     - Using a map would be expected for de duping
-    - A map of structs is memory efficient since an empty struct takes no memory
+    - A map of structs is memory efficient since an empty struct takes no memory, but a map[string]bool would work just as well
     - Watch for assignments to nil map
+    2. Ask them to change the function so that it would work for any number of `Report` structs
+    - The example above already includes this by using a variadic parameter
 
-3. How would you write a struct as JSON to a file? [play.golang](https://play.golang.org/p/EnU2gdTPl08)
+3. How would you write a struct as JSON to a file? [play.golang](https://go.dev/play/p/S5isio_j_Jr)
 
     being able to use `json.Marshal(v interface{})` is something that should be familiar to any GO developer. Remembering how to write to a file might be need some assistance. Let the candidate know that they can ask for any interface that they may need to know but don't know off the top of their head because play.golang has no intellisense.
     - `encoding/json` interfaces
         - `func Marshal(v interface{}) ([]byte, error)`
         - `func Unmarshal(data []byte, v interface{}) error`
+        - `func NewEncoder(w io.Writer) *Encoder`
+            - `func (enc *Encoder) Encode(v interface{}) error`
+        - `func NewDecoder(r io.Reader) *Decoder`
+            - `func (dec *Decoder) Decode(v interface{}) error`    
     - `*os.File` or `io.Writer` interfaces
         - `func Write(p []byte) (n int, err error)`
+
+    This can be done in one line with `json.NewEncoder(f).Encode(&t)` but they might instead do:
     ```
-    func write(t Thing, f *os.File) error {
-        b, err := json.Marshal(&t)
+    func write(f *os.File, finalReport Report) error {
+        b, err := json.Marshal(&finalReport)
         if err != nil {
             return err
         }
@@ -196,12 +207,13 @@ Ask the interviewee what's something they're interested in outside of work (spor
 
     Ask them how they could change the function to support any struct instead of just the `Thing` struct
     - The should explain that they could turn the `v Thing` parameter into `v interface{}`
+    - They would have to change the function call to use a pointer for this to work, make sure they know this
 
     Ask them how they could change the code if they wanted the fields to be written with `camelCase` fields
     - They should add `json:"name"` tags to the struct field
 
 
-4. How would you make multiple http calls at the same time?
+4. How would you make multiple http calls at the same time? [play.golang](https://go.dev/play/p/QadebQBuFYy)
     - The approach for this might vary a lot. They could use some variation of channels and go routines. Possibly the `sync.WaitGroup` or an `errgroup.Group`
 
     How would they collect the response data from the calls made?
@@ -216,7 +228,9 @@ Ask the interviewee what's something they're interested in outside of work (spor
         - If they did not mention that values should be specific to the request scope, or that one should perform a high level of caution before throwing values into context, ask them what kinds of variables would they put in context.
 
 
-6. What is the difference between a buffered and unbuffered channel?
+6. What are channels used for in GO?
+    - Channels are used for communication between go routines. They are used to pass data between go routines or synchronize data in a thread safe manner.
+    1. What is the difference between a buffered and unbuffered channel?
     - channels are unbuffered by default.
-    - channels block when waiting on an empty receive.
+    - unbuffered channels block while waiting for a receiver to read from the channel.
     - a buffer limit can be set on a channel that will block sends to a channel if the buffer is full, until the application has read from the channel to free up the buffer.
