@@ -7,7 +7,7 @@ Domain Driven Design starts with the knowledge of the business entities and valu
 builds around those models.
 
 Communication around these models should be done with a shared [Ubiquitous Language](#ubiquitous-language)
-that both technical and business experts use. This language should be reflected in the [models](#models,
+that both technical and business experts use. This language should be reflected in the [models](#models),
 [entities](#entities), [value objects](#value-objects) and [services](#service) and should be consistent in the code as well as internal messaging and
 discussions.
 
