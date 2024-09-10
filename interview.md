@@ -49,7 +49,11 @@ Remote position - find a history of remote proficiency
 
 1. What is your _least_ favorite thing about your _favorite_ programming language?
     - Use this to try and gauge technical competency for something they should be experts in.
-        ex: In GO, iterating over a map is not deterministic. Also, profiling can be difficult to understand and use.
+        examples for me with Go:
+		- iterating over a map is not deterministic.
+ 		- profiling can be difficult to understand and use.
+  		- Going to version 2 of modules can be tricky.
+ 
 
 # Design
 
